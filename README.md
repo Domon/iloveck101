@@ -1,5 +1,10 @@
 # iloveck101
 
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Domon/iloveck101/trend.png)][bitdeli]
+
+[bitdeli]: https://bitdeli.com/free "Bitdeli Badge"
+
+
 A command-line tool to download images from [ck101][] threads. (Reimplementation of [iloveck101][] in Racket.)
 
 [ck101]: http://ck101.com/
