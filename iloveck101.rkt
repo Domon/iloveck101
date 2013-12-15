@@ -43,7 +43,7 @@
 (define download-image
   (lambda (a-url)
     (and verbose-mode (printf "Downloading ~a...~n" (url->string a-url)))
-    (call-with-output-file
+    (call-with-output-file*
      (build-path download-location (extract-filename a-url))
      (lambda (out)
        (copy-port (get-pure-port a-url) out))
