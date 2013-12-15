@@ -37,14 +37,15 @@
   (lambda (a-url)
     (path/param-path (last (url-path a-url)))))
 
-(make-directory* download-location)
-
-(for-each
+(define download-image
   (lambda (a-url)
     (and verbose-mode (printf "Downloading ~a...~n" (url->string a-url)))
-    (copy-port
-      (get-pure-port a-url)
-      (open-output-file
-        (build-path download-location (extract-filename a-url))
-        #:exists 'replace)))
-  image-urls)
+    (call-with-output-file
+     (build-path download-location (extract-filename a-url))
+     (lambda (out)
+       (copy-port (get-pure-port a-url) out))
+     #:exists 'replace)))
+
+(make-directory* download-location)
+
+(for-each download-image image-urls)
