@@ -1,6 +1,6 @@
 # iloveck101
 
-A script to download images from [ck101][] threads. (Reimplementation of [iloveck101][] in Racket.)
+A command-line tool to download images from [ck101][] threads. (Reimplementation of [iloveck101][] in Racket.)
 
 [ck101]: http://ck101.com/
 [iloveck101]: https://github.com/tzangms/iloveck101
@@ -8,24 +8,24 @@ A script to download images from [ck101][] threads. (Reimplementation of [ilovec
 
 ## Installation
 
-TODO
+    raco pkg install iloveck101
 
 
 ## Usage
 
-    iloveck101 [-v] <url>
+    raco iloveck101 [-v] <url>
 
-The script saves images into `<thread-id> - <thread-subject>` directories under `~/Pictures/iloveck101`.
+The command saves images into `<thread-id> - <thread-subject>` directories under `~/Pictures/iloveck101`.
 
 
 ## Examples
 
-    iloveck101 -v http://ck101.com/thread-2876990-1-1.html
+    raco iloveck101 -v http://ck101.com/thread-2876990-1-1.html
 
 
 ## Platforms
 
-The script should work on Mac OSX 10.9 and Windows 7.
+It should work on Mac OSX 10.9 and Windows 7.
 
 
 ## Copyright
