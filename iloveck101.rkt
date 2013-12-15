@@ -27,11 +27,9 @@
 (define thread-id-with-subject
   (let* ([thread-path (path/param-path (last (url-path thread-url)))]
          [thread-id (second (regexp-match "thread-([0-9]*)-.*" thread-path))]
-
          [thread-title (first ((sxpath "//title/text()") doc))]
          [thread-subject (first (string-split thread-title " - "))]
          [clean-thread-subject (regexp-replace* "[\\\\/]" thread-subject "")])
-
     (string-append thread-id " - " clean-thread-subject)))
 
 (define download-location
@@ -43,18 +41,15 @@
      (url-path-absolute? a-url))
    (map string->url ((sxpath "//img/@file/text()") doc))))
 
-(define extract-filename
-  (lambda (a-url)
-    (path/param-path (last (url-path a-url)))))
-
 (define download-image
   (lambda (a-url)
-    (and verbose-mode (printf "Downloading ~a...~n" (url->string a-url)))
-    (call-with-output-file*
-     (build-path download-location (extract-filename a-url))
-     (lambda (out)
-       (copy-port (get-pure-port a-url) out))
-     #:exists 'replace)))
+    (let ([filename (path/param-path (last (url-path a-url)))])
+      (and verbose-mode (printf "Downloading ~a...~n" (url->string a-url)))
+      (call-with-output-file*
+       (build-path download-location filename)
+       (lambda (out)
+         (copy-port (get-pure-port a-url) out))
+       #:exists 'replace))))
 
 
 (make-directory* download-location)
