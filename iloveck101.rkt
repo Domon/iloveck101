@@ -24,11 +24,18 @@
       (html->xexp in))
     (list "User-Agent: Mozilla/5.0")))
 
-(define thread-title
-  (first ((sxpath "//title/text()") doc)))
+(define thread-id-with-subject
+  (let* ([thread-path (path/param-path (last (url-path thread-url)))]
+         [thread-id (second (regexp-match "thread-([0-9]*)-.*" thread-path))]
+
+         [thread-title (first ((sxpath "//title/text()") doc))]
+         [thread-subject (first (string-split thread-title " - "))]
+         [clean-thread-subject (regexp-replace* "[\\\\/]" thread-subject "")])
+
+    (string-append thread-id " - " clean-thread-subject)))
 
 (define download-location
-  (build-path (find-system-path 'home-dir) "Pictures" "iloveck101" thread-title))
+  (build-path (find-system-path 'home-dir) "Pictures" "iloveck101" thread-id-with-subject))
 
 (define image-urls
   (filter
