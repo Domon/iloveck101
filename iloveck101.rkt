@@ -31,7 +31,10 @@
   (build-path (find-system-path 'home-dir) "Pictures" "iloveck101" thread-title))
 
 (define image-urls
-  (map string->url ((sxpath "//img/@file/text()") doc)))
+  (filter
+   (lambda (a-url)
+     (url-path-absolute? a-url))
+   (map string->url ((sxpath "//img/@file/text()") doc))))
 
 (define extract-filename
   (lambda (a-url)
@@ -45,6 +48,7 @@
      (lambda (out)
        (copy-port (get-pure-port a-url) out))
      #:exists 'replace)))
+
 
 (make-directory* download-location)
 
