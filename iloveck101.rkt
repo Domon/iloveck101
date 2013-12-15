@@ -24,8 +24,20 @@
       (html->xexp in))
     (list "User-Agent: Mozilla/5.0")))
 
-(define urls
+(define thread-title
+  (first ((sxpath "//title/text()") doc)))
+
+(define download-location
+  (build-path (find-system-path 'home-dir) "Pictures" thread-title))
+
+(define image-urls
   (map string->url ((sxpath "//img/@file/text()") doc)))
+
+(define extract-filename
+  (lambda (a-url)
+    (path/param-path (last (url-path a-url)))))
+
+(make-directory* download-location)
 
 (for-each
   (lambda (a-url)
@@ -33,6 +45,6 @@
     (copy-port
       (get-pure-port a-url)
       (open-output-file
-        (path/param-path (last (url-path a-url)))
+        (build-path download-location (extract-filename a-url))
         #:exists 'replace)))
-  urls)
+  image-urls)
