@@ -28,7 +28,7 @@
   (first ((sxpath "//title/text()") doc)))
 
 (define download-location
-  (build-path (find-system-path 'home-dir) "Pictures" thread-title))
+  (build-path (find-system-path 'home-dir) "Pictures" "iloveck101" thread-title))
 
 (define image-urls
   (map string->url ((sxpath "//img/@file/text()") doc)))
